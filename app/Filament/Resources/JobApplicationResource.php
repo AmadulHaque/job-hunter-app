@@ -50,10 +50,12 @@ class JobApplicationResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('job_post_id')->sortable()->searchable()->label('Job ID')->prefix('#'),
                 TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('email'),
-                TextColumn::make('phone'),
-                TextColumn::make('jobPost.position')->label('Job Position'),
+                TextColumn::make('email')->searchable(),
+                TextColumn::make('phone')->searchable(),
+                TextColumn::make('jobPost.company_name')->label('Company Name')->searchable(),
+                TextColumn::make('jobPost.position')->label('Job Position')->searchable(),
                 TextColumn::make('cv')
                 ->label('CV')
                 ->url(fn($record) => asset('files/' . $record->cv)) // Make the link clickable

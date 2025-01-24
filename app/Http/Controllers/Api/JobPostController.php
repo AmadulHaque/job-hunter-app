@@ -31,7 +31,7 @@ class JobPostController extends Controller
                         'id' => $job->id,
                         'position' => $job->position,
                         'company_name' => $job->company_name,
-                        'company_logo' => "filse/".$job->company_logo,
+                        'company_logo' => "files/".$job->company_logo,
                         'job_description' => $job->job_description,
                         'location' => $job->location,
                         'salary_range' => $job->salary_range,

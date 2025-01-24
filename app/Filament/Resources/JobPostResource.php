@@ -66,6 +66,7 @@ class JobPostResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')->sortable()->searchable()->label('ID')->prefix('#'),
                 TextColumn::make('position')->sortable()->searchable(),
                 ImageColumn::make('company_logo'),
                 TextColumn::make('company_name'),
