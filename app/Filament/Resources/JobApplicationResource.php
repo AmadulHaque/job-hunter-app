@@ -29,6 +29,11 @@ class JobApplicationResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) JobApplication::where('is_seen', false)->count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -49,8 +54,17 @@ class JobApplicationResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(JobApplication::query()->latest('id'))
             ->columns([
-                TextColumn::make('job_post_id')->sortable()->searchable()->label('Job ID')->prefix('#'),
+                TextColumn::make('job_post_id')
+                ->sortable()->searchable()->label('Job ID')->prefix('#'),
+                BadgeColumn::make('status')
+                ->colors([
+                    'primary' => 'pending',
+                    'success' => 'approved',
+                    'warning' => 'reviewed',
+                    'danger' => 'rejected',
+                ]),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('email')->searchable(),
                 TextColumn::make('phone')->searchable(),
@@ -61,13 +75,7 @@ class JobApplicationResource extends Resource
                 ->url(fn($record) => asset('files/' . $record->cv)) // Make the link clickable
                 ->openUrlInNewTab()
                 ->default('No CV Uploaded'),
-                BadgeColumn::make('status')
-                    ->colors([
-                        'primary' => 'pending',
-                        'success' => 'approved',
-                        'warning' => 'reviewed',
-                        'danger' => 'rejected',
-                    ]),
+
             ])
             ->filters([
                 SelectFilter::make('status')

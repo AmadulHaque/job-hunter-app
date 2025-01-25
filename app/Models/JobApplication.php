@@ -16,6 +16,7 @@ class JobApplication extends Model
         'cv',
         'job_post_id',
         'status',
+        'is_seen',
     ];
     protected $appends = ['cv_url'];
 
