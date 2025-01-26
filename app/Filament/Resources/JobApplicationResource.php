@@ -56,6 +56,13 @@ class JobApplicationResource extends Resource
         return $table
             ->query(JobApplication::query()->latest('id'))
             ->columns([
+                BadgeColumn::make('is_seen')
+                    ->label('')
+                    ->getStateUsing(fn ($record) => $record->is_seen ? null : 'New')
+                    ->colors([
+                        'danger' => 'New', // Display red badge for "New" records
+                    ]),
+
                 TextColumn::make('job_post_id')
                 ->sortable()->searchable()->label('Job ID')->prefix('#'),
                 BadgeColumn::make('status')

@@ -18,3 +18,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ajax/messages', [ChatController::class,'store'])->name('messages.store');
     Route::get('/messages', [ChatController::class, 'index'])->name('messages.get');
 });
+
+
