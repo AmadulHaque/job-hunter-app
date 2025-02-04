@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('cv');
             $table->foreignId('job_post_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['pending', 'reviewed', 'approved', 'rejected'])->default('pending');
-            $table->enum('is_seen', ['0', '1', ])->default('0');
+            $table->integer('is_seen')->default(0);
             $table->timestamps();
         });
     }
